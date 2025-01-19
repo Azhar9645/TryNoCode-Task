@@ -7,13 +7,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive/hive.dart';
+import 'package:mockito/mockito.dart';
 
 import 'package:trynocode_assignment/main.dart';
 
+class MockHiveBox extends Mock implements Box {}
+
+
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+        final mockBox = MockHiveBox();
+
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    await tester.pumpWidget( MyApp(projectBox: mockBox));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

@@ -54,19 +54,43 @@ class OtherProjectModelAdapter extends TypeAdapter<OtherProjectModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return OtherProjectModel(
-      projectName: fields[0] as String,
-      description: fields[1] as String,
+      projectId: fields[0] as String,
+      projectName: fields[1] as String,
+      type: fields[2] as String,
+      image: fields[3] as String,
+      groupName: fields[4] as String,
+      groupId: fields[5] as String,
+      description: fields[6] as String,
+      memberCount: fields[7] as int,
+      eventCount: fields[8] as int,
+      soccsValue: fields[9] as int,
     );
   }
 
   @override
   void write(BinaryWriter writer, OtherProjectModel obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(10)
       ..writeByte(0)
-      ..write(obj.projectName)
+      ..write(obj.projectId)
       ..writeByte(1)
-      ..write(obj.description);
+      ..write(obj.projectName)
+      ..writeByte(2)
+      ..write(obj.type)
+      ..writeByte(3)
+      ..write(obj.image)
+      ..writeByte(4)
+      ..write(obj.groupName)
+      ..writeByte(5)
+      ..write(obj.groupId)
+      ..writeByte(6)
+      ..write(obj.description)
+      ..writeByte(7)
+      ..write(obj.memberCount)
+      ..writeByte(8)
+      ..write(obj.eventCount)
+      ..writeByte(9)
+      ..write(obj.soccsValue);
   }
 
   @override

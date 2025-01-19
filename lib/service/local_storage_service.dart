@@ -1,20 +1,58 @@
 import 'package:hive/hive.dart';
+import 'package:trynocode_assignment/models/other_project.dart';
 import 'package:trynocode_assignment/models/project.dart';
 
 class LocalStorage {
-  static const String boxName = 'projectsBox';
+  static const String myProjectsKey = 'myProjects';
+  static const String otherProjectsKey = 'otherProjects';
 
-  // Store Projects to Hive
-  Future<void> storeProjects(List<ProjectModel> projects) async {
-    var box = await Hive.openBox(boxName);
-    List<Map<String, dynamic>> projectList = projects.map((project) => project.toJson()).toList();
-    await box.put('projects', projectList);
+  final Box box;
+
+  LocalStorage(this.box);
+
+  Future<void> saveMyProjects(List<ProjectModel> projects) async {
+    try {
+      await box.put(myProjectsKey, projects);
+    } catch (e) {
+      throw LocalStorageException('Failed to save my projects: $e');
+    }
   }
 
-  // Retrieve Projects from Hive
-  Future<List<ProjectModel>> loadProjects() async {
-    var box = await Hive.openBox(boxName);
-    List<dynamic> data = box.get('projects', defaultValue: []);
-    return data.map((e) => ProjectModel.fromJson(e)).toList();
+  Future<void> saveOtherProjects(List<OtherProjectModel> projects) async {
+    try {
+      await box.put(otherProjectsKey, projects);
+    } catch (e) {
+      throw LocalStorageException('Failed to save other projects: $e');
+    }
   }
+
+  List<ProjectModel> getMyProjects() {
+    try {
+      return (box.get(myProjectsKey, defaultValue: <ProjectModel>[]) as List)
+          .cast<ProjectModel>();
+    } catch (e) {
+      throw LocalStorageException('Failed to load my projects: $e');
+    }
+  }
+
+  List<OtherProjectModel> getOtherProjects() {
+    try {
+      return (box.get(otherProjectsKey, defaultValue: <OtherProjectModel>[]) as List)
+          .cast<OtherProjectModel>();
+    } catch (e) {
+      throw LocalStorageException('Failed to load other projects: $e');
+    }
+  }
+
+  Future<void> clearAll() async {
+    await box.clear();
+  }
+}
+
+class LocalStorageException implements Exception {
+  final String message;
+  LocalStorageException(this.message);
+  
+  @override
+  String toString() => message;
 }
