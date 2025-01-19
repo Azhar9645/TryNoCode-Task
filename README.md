@@ -5,10 +5,10 @@ A new Flutter project.
 ## App Screenshot
 
 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-  <img src="./assets/images/Screenshot_1737310506.png" alt="App Screenshot 1" width="300" />
-  <img src="./assets/images/Screenshot_1737310511.png" alt="App Screenshot 2" width="300" />
-  <img src="./assets/images/Screenshot_1737310520.png" alt="App Screenshot 3" width="300" />
-  <img src="./assets/images/Screenshot_1737310492.png" alt="App Screenshot 4" width="300" />
+  <img src="./assets/images/Screenshot_1737310506.png" alt="App Screenshot 1" width="200" />
+  <img src="./assets/images/Screenshot_1737310511.png" alt="App Screenshot 2" width="200" />
+  <img src="./assets/images/Screenshot_1737310520.png" alt="App Screenshot 3" width="200" />
+  <img src="./assets/images/Screenshot_1737310492.png" alt="App Screenshot 4" width="200" />
 </div>
 
 
