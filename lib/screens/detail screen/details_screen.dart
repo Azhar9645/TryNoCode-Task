@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:trynocode_assignment/models/other_project.dart';
-import 'package:trynocode_assignment/models/project.dart';
+import 'package:trynocode_assignment/models/main_project.dart';
 import 'package:trynocode_assignment/screens/detail%20screen/details_project_card.dart';
 import 'package:trynocode_assignment/screens/widgets/my_project/app_bar.dart';
 import 'package:trynocode_assignment/screens/widgets/my_project/my_project_header.dart';

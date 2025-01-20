@@ -1,7 +1,5 @@
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 import 'package:trynocode_assignment/models/other_project.dart';
-import 'package:trynocode_assignment/models/project.dart';
+import 'package:trynocode_assignment/models/main_project.dart';
 
 abstract class DatabaseService {
   Future<void> insertMyProjects(List<ProjectModel> projects);

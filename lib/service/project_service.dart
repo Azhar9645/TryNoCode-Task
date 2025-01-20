@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:trynocode_assignment/models/other_project.dart';
-import 'package:trynocode_assignment/models/project.dart';
+import 'package:trynocode_assignment/models/main_project.dart';
 
 class ProjectService {
   static const String baseUrl =

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:trynocode_assignment/screens/detail%20screen/leaderboard.dart';
 import 'package:trynocode_assignment/models/other_project.dart';
-import 'package:trynocode_assignment/models/project.dart';
+import 'package:trynocode_assignment/models/main_project.dart';
 import 'package:trynocode_assignment/utils/constants.dart';
 
 class DetailProjectCard extends StatelessWidget {

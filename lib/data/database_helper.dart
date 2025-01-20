@@ -1,114 +1,107 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:trynocode_assignment/models/main_project.dart';
 import 'package:trynocode_assignment/models/other_project.dart';
-import 'package:trynocode_assignment/models/project.dart';
-import 'package:trynocode_assignment/service/database_service.dart'; // Make sure to import the DatabaseService
 
-class DatabaseHelper implements DatabaseService {
-  static final DatabaseHelper _instance = DatabaseHelper._internal();
-  static Database? _database;
+class DatabaseHelper {
+  static const String _databaseName = 'project_database.db';
+  static const int _databaseVersion = 1;
+  static const String _myProjectTable = 'my_project_table';
+  static const String _otherProjectTable = 'other_project_table';
 
-  factory DatabaseHelper() => _instance;
+  Database? _database;
 
-  DatabaseHelper._internal();
-
-  @override
   Future<Database> get database async {
     if (_database != null) return _database!;
-    _database = await _initDatabase();
+    // Instantiate the database if it's null
+    _database = await _initializeDatabase();
     return _database!;
   }
 
-  Future<Database> _initDatabase() async {
-    String path = join(await getDatabasesPath(), 'projects_database.db');
-    return await openDatabase(
+  Future<Database> _initializeDatabase() async {
+    String path = join(await getDatabasesPath(), _databaseName);
+    return openDatabase(
       path,
-      version: 2,  // Incremented version to 2 for migration
-      onCreate: onCreate,
-      onUpgrade: onUpgrade,  // Handle upgrade here
+      version: _databaseVersion,
+      onCreate: (db, version) async {
+        await db.execute('''
+          CREATE TABLE $_myProjectTable (
+            projectId TEXT PRIMARY KEY,
+            projectname TEXT,
+            type TEXT,
+            Image TEXT,
+            group_name TEXT,
+            description TEXT,
+            membercount INTEGER,
+            event_count INTEGER,
+            soccsvalue INTEGER
+          )
+        ''');
+        await db.execute('''
+          CREATE TABLE $_otherProjectTable (
+            projectId TEXT PRIMARY KEY,
+            projectname TEXT,
+            type TEXT,
+            Image TEXT,
+            group_name TEXT,
+            groupid TEXT,
+            description TEXT,
+            membercount INTEGER,
+            event_count INTEGER,
+            soccsvalue INTEGER
+          )
+        ''');
+      },
     );
   }
 
-  Future<void> onCreate(Database db, int version) async {
-    await db.execute(''' 
-      CREATE TABLE my_projects (
-        projectId TEXT PRIMARY KEY,
-        projectname TEXT,
-        type TEXT,
-        image TEXT,
-        group_name TEXT,  -- Added this column
-        membercount INTEGER,
-        event_count INTEGER,
-        soccsvalue INTEGER
-      )
-    ''');
-
-    await db.execute(''' 
-      CREATE TABLE other_projects (
-        projectId TEXT PRIMARY KEY,
-        projectname TEXT,
-        type TEXT,
-        image TEXT,
-        group_name TEXT,  -- Added this column
-        groupid TEXT,     -- This column already exists in your table
-        description TEXT,
-        membercount INTEGER,
-        event_count INTEGER,
-        soccsvalue INTEGER,
-        page INTEGER
-      )
-    ''');
-  }
-
-  // Handle upgrades (migrations) between versions
-  Future<void> onUpgrade(Database db, int oldVersion, int newVersion) async {
-    if (oldVersion < 2) {
-      // For both tables, add the new `group_name` column if it does not exist
-      await db.execute('''
-        ALTER TABLE my_projects ADD COLUMN group_name TEXT;
-      ''');
-
-      await db.execute('''
-        ALTER TABLE other_projects ADD COLUMN group_name TEXT;
-      ''');
-    }
-  }
-
-  @override
-  Future<void> insertMyProjects(List<ProjectModel> projects) async {
+  // Insert a project into the "MyProjects" table
+  Future<void> insertMyProject(ProjectModel project) async {
     final db = await database;
-    for (var project in projects) {
-      await db.insert(
-        'my_projects',
-        project.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    }
+    await db.insert(
+      _myProjectTable,
+      project.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
-  @override
-  Future<void> insertOtherProjects(List<OtherProjectModel> projects) async {
+  // Insert a project into the "OtherProjects" table
+  Future<void> insertOtherProject(OtherProjectModel project) async {
     final db = await database;
-    for (var project in projects) {
-      await db.insert(
-        'other_projects',
-        project.toJson(),
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    }
+    await db.insert(
+      _otherProjectTable,
+      project.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
   }
 
-  @override
-  Future<List<ProjectModel>> fetchMyProjects() async {
+  // Fetch all "MyProjects" from the database
+  Future<List<ProjectModel>> getMyProjects() async {
     final db = await database;
-    final result = await db.query('my_projects');
-    return result.map((e) => ProjectModel.fromJson(e)).toList();
+    final List<Map<String, dynamic>> maps = await db.query(_myProjectTable);
+    return List.generate(maps.length, (i) {
+      return ProjectModel.fromJson(maps[i]);
+    });
   }
 
-  @override
-  Future<List<OtherProjectModel>> fetchOtherProjects() async {
+  // Fetch all "OtherProjects" from the database
+  Future<List<OtherProjectModel>> getOtherProjects() async {
     final db = await database;
-    final result = await db.query('other_projects');
-    return result.map((e) => OtherProjectModel.fromJson(e)).toList();
+    final List<Map<String, dynamic>> maps = await db.query(_otherProjectTable);
+    return List.generate(maps.length, (i) {
+      return OtherProjectModel.fromJson(maps[i]);
+    });
+  }
+
+  // Clear all "MyProjects" data
+  Future<void> clearMyProjects() async {
+    final db = await database;
+    await db.delete(_myProjectTable);
+  }
+
+  // Clear all "OtherProjects" data
+  Future<void> clearOtherProjects() async {
+    final db = await database;
+    await db.delete(_otherProjectTable);
   }
 }

@@ -17,7 +17,7 @@ class ProjectModel {
     required this.groupName,
     required this.description,
     required this.memberCount,
-    required this.eventCount,
+    required this.eventCount, 
     required this.soccsValue,
   });
 
