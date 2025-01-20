@@ -19,23 +19,18 @@ class ProjectLoadedState extends ProjectState {
   });
 }
 
-// class MyProjectSuccessState extends ProjectState {
-//   final List<ProjectModel> projects;
-//   MyProjectSuccessState(this.projects);
-  
-// }
+class ProjectOfflineState extends ProjectState {
+  final List<ProjectModel> myProjects;
+  final List<OtherProjectModel> otherProjects;
+  final bool hasMore;
 
-// class OtherProjectSuccessState extends ProjectState {
-//   final List<OtherProjectModel> projects;
-//   final bool hasMore;
-//   final int currentPage;
+  ProjectOfflineState({
+    required this.myProjects,
+    required this.otherProjects,
+    required this.hasMore,
+  });
+}
 
-//   OtherProjectSuccessState(
-//     this.projects, {
-//     required this.hasMore,
-//     required this.currentPage,
-//   });
-// }
 
 final class ProjectErrorState extends ProjectState {
   final String message;

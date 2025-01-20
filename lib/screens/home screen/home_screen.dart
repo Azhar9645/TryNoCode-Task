@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trynocode_assignment/bloc/project_bloc.dart';
-import 'package:trynocode_assignment/widgets/my_project/my_project_header.dart';
-import 'package:trynocode_assignment/widgets/other_project/other_project_card.dart';
-import 'package:trynocode_assignment/widgets/shimmer_card.dart';
-import '../../widgets/my_project/app_bar.dart';
-import '../../widgets/my_project/project_card.dart';
-
-
+import 'package:trynocode_assignment/screens/widgets/my_project/my_project_header.dart';
+import 'package:trynocode_assignment/screens/widgets/other_project/other_project_card.dart';
+import 'package:trynocode_assignment/screens/widgets/shimmer_card.dart';
+import '../widgets/my_project/app_bar.dart';
+import '../widgets/my_project/project_card.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -21,7 +19,6 @@ class HomeScreen extends StatelessWidget {
       appBar: const CustomAppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
-          context.read<ProjectBloc>().add(FetchMyProjectsEvent());
           context
               .read<ProjectBloc>()
               .add(FetchOtherProjectsEvent(page: 1, limit: 5));

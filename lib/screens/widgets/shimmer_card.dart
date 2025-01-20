@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:trynocode_assignment/widgets/my_project/my_project_header.dart';
+import 'package:trynocode_assignment/screens/widgets/my_project/my_project_header.dart';
 
 class ShimmerCard extends StatelessWidget {
   const ShimmerCard({super.key});
@@ -15,7 +15,7 @@ class ShimmerCard extends StatelessWidget {
             MyProject(),
             Container(
               decoration: BoxDecoration(
-                color: Colors.grey.shade400, // Changed pink to grey
+                color: Colors.grey.shade400, 
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Padding(
@@ -120,7 +120,7 @@ class StatsContainerShimmer extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.grey.shade200, // Outline border color
+          color: Colors.grey.shade200, 
           width: 1.0,
         ),
       ),

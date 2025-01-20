@@ -37,4 +37,19 @@ class OtherProjectModel {
       soccsValue: json['soccsvalue'] ?? 0,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'projectId': projectId,
+      'projectname': projectName,
+      'type': type,
+      'Image': image,
+      'group_name': groupName,
+      'groupid': groupId,
+      'description': description,
+      'membercount': memberCount,
+      'event_count': eventCount,
+      'soccsvalue': soccsValue,
+    };
+  }
 }

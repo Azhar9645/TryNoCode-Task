@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trynocode_assignment/models/other_project.dart';
 import 'package:trynocode_assignment/screens/detail%20screen/details_screen.dart';
 import 'package:trynocode_assignment/utils/constants.dart';
-import 'package:trynocode_assignment/widgets/my_project/stats_container.dart';
+import 'package:trynocode_assignment/screens/widgets/my_project/stats_container.dart';
 
 class OtherProjectCard extends StatelessWidget {
   final OtherProjectModel project;

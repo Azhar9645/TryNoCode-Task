@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:trynocode_assignment/utils/constants.dart';
 
@@ -24,9 +26,7 @@ class LeaderboardContainer extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
-              height: 20), // Spacing between text and the white container
-          // White container with leaderboard details
+          const SizedBox(height: 20),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -38,7 +38,6 @@ class LeaderboardContainer extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Top 3 Rankings
                     Column(
                       children: List.generate(3, (index) {
                         return Padding(
@@ -52,7 +51,6 @@ class LeaderboardContainer extends StatelessWidget {
                       }),
                     ),
                     const SizedBox(height: 16),
-                    // Remaining Rankings
                     Expanded(
                       child: ListView.builder(
                         padding: EdgeInsets.zero,

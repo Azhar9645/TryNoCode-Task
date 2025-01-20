@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:trynocode_assignment/bloc/project_bloc.dart';
-import 'package:trynocode_assignment/models/project_model.dart';
+import 'package:trynocode_assignment/data/database_helper.dart';
 import 'package:trynocode_assignment/screens/home%20screen/home_screen.dart';
 import 'package:trynocode_assignment/service/project_service.dart';
 import 'package:trynocode_assignment/utils/connectivity_helper.dart';
@@ -11,28 +9,36 @@ import 'package:trynocode_assignment/utils/connectivity_helper.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Hive.registerAdapter(OtherProjectModelAdapter());
-  Hive.registerAdapter(ProjectModelAdapter());
+  // Initialize dependencies
+  final databaseHelper = DatabaseHelper(); 
+  final projectService = ProjectService(); 
+  final connectivityService = ConnectivityService();
 
-  // Initialize Hive and open the project box
-  await Hive.initFlutter();
-  final Box projectBox = await Hive.openBox('projectBox');
+  // Wrap DatabaseHelper as DatabaseService
+  final databaseService = databaseHelper; 
 
-  // Pass the projectBox directly to MyApp
-  runApp(MyApp(projectBox: projectBox));
+  runApp(MyApp(
+    projectService: projectService,
+    connectivityService: connectivityService,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  final Box projectBox;
-  const MyApp({super.key, required this.projectBox});
+  final ProjectService projectService;
+  final ConnectivityService connectivityService;
+
+  const MyApp({
+    super.key,
+    required this.projectService,
+    required this.connectivityService,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ProjectBloc(
-        ProjectService(),
-        ConnectivityService(),
-        projectBox, // Pass the projectBox directly to the Bloc
+        projectService, 
+        connectivityService, 
       ),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -41,7 +47,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
           scaffoldBackgroundColor:
-              const Color(0xFFF5F5F5), // Set background to off-white
+              const Color(0xFFF5F5F5),
         ),
         home: const HomeScreen(),
       ),

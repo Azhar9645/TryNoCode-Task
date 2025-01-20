@@ -16,17 +16,14 @@ class DetailProjectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Check if project is not null (ProjectModel) or otherProject is not null (OtherProjectModel)
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Stack to overlay the PopupMenuButton on top of the image
           if (project != null || otherProject != null)
             Stack(
               children: [
-                // Display image based on the model (either ProjectModel or OtherProjectModel)
                 ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.network(
@@ -36,7 +33,6 @@ class DetailProjectCard extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
-                // Positioned PopupMenuButton on top of the image
                 Positioned(
                   top: 8,
                   right: 8,
@@ -46,8 +42,7 @@ class DetailProjectCard extends StatelessWidget {
                       print(value);
                     },
                     itemBuilder: (BuildContext context) {
-                      return {'Edit', 'Share QR Code'}
-                          .map((String option) {
+                      return {'Edit', 'Share QR Code'}.map((String option) {
                         return PopupMenuItem<String>(
                           value: option,
                           child: Text(option),
@@ -59,8 +54,6 @@ class DetailProjectCard extends StatelessWidget {
               ],
             ),
           const SizedBox(height: 16),
-
-          // Title and Group Name Section (Common for both models)
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
@@ -79,8 +72,6 @@ class DetailProjectCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
-
-          // Type Tag Section (Common for both models)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
@@ -93,8 +84,6 @@ class DetailProjectCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-
-          // Description Section (Only for OtherProjectModel)
           if (otherProject != null)
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -127,7 +116,6 @@ class DetailProjectCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-
           LeaderboardContainer()
         ],
       ),

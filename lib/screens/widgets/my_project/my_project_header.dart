@@ -20,10 +20,9 @@ class MyProject extends StatelessWidget {
               icon: const Icon(Icons.keyboard_arrow_left, color: Colors.black),
               onPressed: () {
                 if (Navigator.canPop(context)) {
-                  Navigator.pop(context);  // Navigate back if possible
+                  Navigator.pop(context);
                 } else {
-                  // Optionally, handle the case where there is no screen to go back to
-                  print("No screen to go back to");  // Or show a message, or exit app
+                  print("No screen to go back to");
                 }
               },
             ),
